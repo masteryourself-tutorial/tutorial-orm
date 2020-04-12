@@ -1,10 +1,10 @@
-package pers.masteryourself.tutorial.orm.mybatis.log;
+package pers.masteryourself.tutorial.mybatis.log;
 
 import org.apache.ibatis.logging.LogFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import pers.masteryourself.tutorial.orm.mybatis.log.config.SpringConfig;
-import pers.masteryourself.tutorial.orm.mybatis.log.domain.User;
-import pers.masteryourself.tutorial.orm.mybatis.log.service.UserService;
+import pers.masteryourself.tutorial.mybatis.log.config.SpringConfig;
+import pers.masteryourself.tutorial.mybatis.log.service.UserService;
+import pers.masteryourself.tutorial.mybatis.log.domain.User;
 
 /**
  * <p>description : LogApplication

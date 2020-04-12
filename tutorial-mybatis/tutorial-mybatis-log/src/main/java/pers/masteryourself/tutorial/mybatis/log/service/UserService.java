@@ -1,9 +1,9 @@
-package pers.masteryourself.tutorial.orm.mybatis.log.service;
+package pers.masteryourself.tutorial.mybatis.log.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pers.masteryourself.tutorial.orm.mybatis.log.domain.User;
-import pers.masteryourself.tutorial.orm.mybatis.log.mapper.UserMapper;
+import pers.masteryourself.tutorial.mybatis.log.domain.User;
+import pers.masteryourself.tutorial.mybatis.log.mapper.UserMapper;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pers.masteryourself.tutorial.orm.mybatis.log.config;
+package pers.masteryourself.tutorial.mybatis.log.config;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,8 +19,8 @@ import javax.sql.DataSource;
  * @date : 2020/4/11 16:08
  */
 @Configuration
-@ComponentScan("pers.masteryourself.tutorial.orm.mybatis.log")
-@MapperScan("pers.masteryourself.tutorial.orm.mybatis.log")
+@ComponentScan("pers.masteryourself.tutorial.mybatis.log")
+@MapperScan("pers.masteryourself.tutorial.mybatis.log")
 public class SpringConfig {
 
     @Bean

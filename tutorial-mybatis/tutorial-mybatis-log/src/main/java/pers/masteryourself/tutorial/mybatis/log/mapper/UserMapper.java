@@ -1,7 +1,7 @@
-package pers.masteryourself.tutorial.orm.mybatis.log.mapper;
+package pers.masteryourself.tutorial.mybatis.log.mapper;
 
 import org.apache.ibatis.annotations.Select;
-import pers.masteryourself.tutorial.orm.mybatis.log.domain.User;
+import pers.masteryourself.tutorial.mybatis.log.domain.User;
 
 import java.util.List;
 

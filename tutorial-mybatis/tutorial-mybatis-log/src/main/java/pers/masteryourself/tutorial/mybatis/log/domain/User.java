@@ -1,4 +1,4 @@
-package pers.masteryourself.tutorial.orm.mybatis.log.domain;
+package pers.masteryourself.tutorial.mybatis.log.domain;
 
 import lombok.Data;
 
