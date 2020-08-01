@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.masteryourself.tutorial.mybatis.quickstart.mapper.EmployeeMapper">
 
-    <select id="getById" resultType="pers.masteryourself.tutorial.mybatis.quickstart.domain.Employee">
+    <select id="getById" resultType="tbl_employee">
         select
             id,
             last_name lastName

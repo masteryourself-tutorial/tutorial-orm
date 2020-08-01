@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import pers.masteryourself.tutorial.mybatis.quickstart.domain.Employee;
 import pers.masteryourself.tutorial.mybatis.quickstart.mapper.EmployeeMapper;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -20,22 +21,37 @@ import java.io.InputStream;
  */
 public class QuickStartApplication {
 
+    private static SqlSessionFactory sqlSessionFactory;
+
     public static void main(String[] args) throws Exception {
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        // 使用方式一
+        // 初始化 SqlSessionFactory
+        initSqlSessionFactory();
+        // 直接使用 SqlSession
+        useSqlSession();
+        // 使用 Mapper 映射文件
+        useMapper();
+    }
+
+    private static void useSqlSession() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Employee employee = sqlSession.selectOne("pers.masteryourself.tutorial.mybatis.quickstart.mapper.EmployeeMapper.getById", 1);
             System.out.println(employee);
         }
-        // 使用方式二
+    }
+
+    private static void useMapper() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
             Employee employee = mapper.getById(1);
             System.out.println(mapper.getClass());
             System.out.println(employee);
         }
+    }
+
+    private static void initSqlSessionFactory() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }
 
 }

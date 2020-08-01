@@ -1,6 +1,7 @@
 package pers.masteryourself.tutorial.mybatis.quickstart.domain;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 /**
  * <p>description : Employee
@@ -12,6 +13,7 @@ import lombok.Data;
  * @date : 2020/8/1 14:54
  */
 @Data
+@Alias("tbl_employee")
 public class Employee {
 
     private Integer id;
