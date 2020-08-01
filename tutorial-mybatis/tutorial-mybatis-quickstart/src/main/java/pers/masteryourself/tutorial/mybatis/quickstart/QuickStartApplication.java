@@ -26,20 +26,33 @@ public class QuickStartApplication {
     public static void main(String[] args) throws Exception {
         // 初始化 SqlSessionFactory
         initSqlSessionFactory();
+        // 插入员工
+        saveEmp();
         // 直接使用 SqlSession
-        useSqlSession();
+        queryWithSqlSession();
         // 使用 Mapper 映射文件
-        useMapper();
+        queryWithMapper();
     }
 
-    private static void useSqlSession() {
+    private static void saveEmp() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee employee = new Employee();
+            employee.setLastName("tutorial-mybatis-quickstart");
+            mapper.save(employee);
+            // 手动提交事务
+            sqlSession.commit();
+        }
+    }
+
+    private static void queryWithSqlSession() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Employee employee = sqlSession.selectOne("pers.masteryourself.tutorial.mybatis.quickstart.mapper.EmployeeMapper.getById", 1);
             System.out.println(employee);
         }
     }
 
-    private static void useMapper() {
+    private static void queryWithMapper() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
             Employee employee = mapper.getById(1);

@@ -13,6 +13,8 @@ import pers.masteryourself.tutorial.mybatis.quickstart.domain.Employee;
  */
 public interface EmployeeMapper {
 
+    void save(Employee emp);
+
     Employee getById(Integer id);
 
 }
