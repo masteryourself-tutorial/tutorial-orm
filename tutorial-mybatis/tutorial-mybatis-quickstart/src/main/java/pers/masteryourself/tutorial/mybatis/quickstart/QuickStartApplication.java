@@ -28,6 +28,7 @@ public class QuickStartApplication {
         initSqlSessionFactory();
         // 插入员工
         saveEmp();
+        saveEmpBySelectKey();
         // 直接使用 SqlSession
         queryWithSqlSession();
         // 使用 Mapper 映射文件
@@ -38,8 +39,21 @@ public class QuickStartApplication {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
             Employee employee = new Employee();
-            employee.setLastName("tutorial-mybatis-quickstart");
+            employee.setLastName("saveEmp");
             mapper.save(employee);
+            System.out.println(employee);
+            // 手动提交事务
+            sqlSession.commit();
+        }
+    }
+
+    private static void saveEmpBySelectKey() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee employee = new Employee();
+            employee.setLastName("saveEmpBySelectKey");
+            mapper.saveBySelectKey(employee);
+            System.out.println(employee);
             // 手动提交事务
             sqlSession.commit();
         }

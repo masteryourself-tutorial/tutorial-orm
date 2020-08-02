@@ -1,6 +1,7 @@
 package pers.masteryourself.tutorial.mybatis.quickstart.domain;
 
 import lombok.Data;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 /**
@@ -14,6 +15,7 @@ import org.apache.ibatis.type.Alias;
  */
 @Data
 @Alias("tbl_employee")
+@ToString
 public class Employee {
 
     private Integer id;

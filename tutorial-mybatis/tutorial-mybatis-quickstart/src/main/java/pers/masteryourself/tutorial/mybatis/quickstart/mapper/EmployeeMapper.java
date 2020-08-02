@@ -15,6 +15,8 @@ public interface EmployeeMapper {
 
     void save(Employee emp);
 
+    void saveBySelectKey(Employee emp);
+
     Employee getById(Integer id);
 
 }
