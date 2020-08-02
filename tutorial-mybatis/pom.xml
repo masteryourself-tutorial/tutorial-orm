@@ -15,6 +15,7 @@
     <modules>
         <module>tutorial-mybatis-log</module>
         <module>tutorial-mybatis-quickstart</module>
+        <module>tutorial-mybatis-mbg</module>
     </modules>
 
 </project>
