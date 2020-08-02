@@ -20,93 +20,64 @@ import org.mybatis.generator.internal.util.StringUtility;
 public class RemarksCommentGenerator extends DefaultCommentGenerator {
 
     /**
-     * 定义一个是否使用修改后的模式的标识
-     */
-    private boolean suppressAllComments = true;
-
-    /**
-     * 设置实体类 属性注释
+     * 自定义实体类属性注释
      *
-     * @param field
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param field              {@link Field}
+     * @param introspectedTable  {@link IntrospectedTable}
+     * @param introspectedColumn {@link IntrospectedColumn}
      */
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments) {
-            if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
-                field.addJavaDocLine("/**");
-                field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
-                field.addJavaDocLine(" */");
-            }
-        } else {
-            super.addFieldComment(field, introspectedTable, introspectedColumn);
+        if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
+            field.addJavaDocLine("/**");
+            field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
+            field.addJavaDocLine(" */");
         }
     }
 
     /**
-     * 设置实体类 getter注释
+     * 设置实体类 getter 注释
      *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param method             {@link Method}
+     * @param introspectedTable  {@link IntrospectedTable}
+     * @param introspectedColumn {@link IntrospectedColumn}
      */
     @Override
     public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments) {
-            if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
-                //method.addJavaDocLine("//获取:" + introspectedColumn.getRemarks());
-            }
-        } else {
-            super.addGetterComment(method, introspectedTable, introspectedColumn);
-        }
+        // do nothing
     }
 
     /**
-     * 设置实体类 setter注释
+     * 设置实体类 setter 注释
      *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param method             {@link Method}
+     * @param introspectedTable  {@link IntrospectedTable}
+     * @param introspectedColumn {@link IntrospectedColumn}
      */
     @Override
     public void addSetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments) {
-            if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
-                //method.addJavaDocLine("//设置:" + introspectedColumn.getRemarks());
-            }
-        } else {
-            super.addSetterComment(method, introspectedTable, introspectedColumn);
-        }
+        // do nothing
     }
 
     /**
-     * 去掉mapper原始注释
+     * 去掉 mapper 接口注释
      *
-     * @param method
-     * @param introspectedTable
+     * @param method            {@link Method}
+     * @param introspectedTable {@link IntrospectedTable}
      */
     @Override
     public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
-        if (suppressAllComments) {
-            return;
-        } else {
-            super.addGeneralMethodComment(method, introspectedTable);
-        }
+        // do nothing
     }
 
     /**
-     * 去掉mapping原始注释
+     * 去掉 xml 接口注释
      *
-     * @param xmlElement
+     * @param xmlElement {@link XmlElement}
      */
     @Override
     public void addComment(XmlElement xmlElement) {
-        if (suppressAllComments) {
-            return;
-        } else {
-            super.addComment(xmlElement);
-        }
+        // do nothing
     }
 
 }

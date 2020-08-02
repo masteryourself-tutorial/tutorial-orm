@@ -57,7 +57,7 @@
                    3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
                注意，如果context是MyBatis3Simple：只支持 ANNOTATEDMAPPER 和 XMLMAPPER
            -->
-        <javaClientGenerator targetPackage="${mapper_package}" targetProject="${model_project}" type="ANNOTATEDMAPPER"/>
+        <javaClientGenerator targetPackage="${mapper_package}" targetProject="${model_project}" type="XMLMAPPER"/>
 
         <!-- shema 数据库 tableName表明，% 表示所有表 -->
         <table tableName="%">
