@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.masteryourself.tutorial.tk.mybatis.quickstart.domain.Employee;
 import pers.masteryourself.tutorial.tk.mybatis.quickstart.mapper.EmployeeMapper;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * <p>description : EmployeeService
@@ -24,4 +27,23 @@ public class EmployeeService {
         return employeeMapper.selectOne(query);
     }
 
+    public Employee selectByPrimaryKey(long id) {
+        return employeeMapper.selectByPrimaryKey(id);
+    }
+
+    public int insert(Employee employee){
+        return employeeMapper.insert(employee);
+    }
+
+    public int insertSelective(Employee employee){
+        return employeeMapper.insertSelective(employee);
+    }
+
+    public int updateByPrimaryKeySelective(Employee employee){
+        return employeeMapper.updateByPrimaryKeySelective(employee);
+    }
+
+    public List<Employee> selectByExample(Example example ){
+        return employeeMapper.selectByExample(example);
+    }
 }

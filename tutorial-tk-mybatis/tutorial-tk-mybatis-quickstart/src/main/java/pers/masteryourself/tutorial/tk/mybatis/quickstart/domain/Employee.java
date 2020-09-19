@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.persistence.*;
+import java.util.Date;
+
 /**
  * <p>description : Employee
  *
@@ -18,8 +21,19 @@ import lombok.ToString;
 @Builder
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String lastName;
+
+    @Column(name = "create_time", updatable = false, insertable = false)
+    private Date createTime;
+
+    @Column(name = "update_time", updatable = false, insertable = false)
+    private Date updateTime;
+
+    @Transient
+    private String mark;
 
 }
