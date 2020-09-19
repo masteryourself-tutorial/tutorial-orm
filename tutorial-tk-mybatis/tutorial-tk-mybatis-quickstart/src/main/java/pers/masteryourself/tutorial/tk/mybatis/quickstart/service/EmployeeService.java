@@ -1,11 +1,11 @@
 package pers.masteryourself.tutorial.tk.mybatis.quickstart.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.masteryourself.tutorial.tk.mybatis.quickstart.domain.Employee;
 import pers.masteryourself.tutorial.tk.mybatis.quickstart.mapper.EmployeeMapper;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    @Autowired
+    @Resource
     private EmployeeMapper employeeMapper;
 
     public Employee selectOne(Employee query) {
