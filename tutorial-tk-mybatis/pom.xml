@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>tutorial-tk-mybatis-quickstart</module>
+        <module>tutorial-tk-mybatis-mbg</module>
     </modules>
 
 
