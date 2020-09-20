@@ -31,7 +31,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void testSelectOne() {
-        Employee query = Employee.builder().id(1).build();
+        Employee query = new Employee();
+        query.setId(1);
         Employee employee = employeeService.selectOne(query);
         log.info("selectOne {}", employee);
     }
@@ -44,26 +45,26 @@ public class EmployeeServiceTest {
 
     @Test
     public void testInsert() {
-        Employee employee = Employee.builder().lastName("张三").build();
+        Employee employee = new Employee();
+        employee.setLastName("张三");
         int result = employeeService.insert(employee);
         log.info("insert {} employee id {}", result, employee.getId());
     }
 
     @Test
     public void testInsertSelective() {
-        Employee employee = Employee.builder().build();
+        Employee employee = new Employee();
         int result = employeeService.insertSelective(employee);
         log.info("insertSelective {} employee id {}", result, employee.getId());
     }
 
     @Test
     public void testUpdateByPrimaryKeySelective() {
-        Employee employee = Employee.builder()
-                .id(1)
-                .lastName("我改名字了")
-                .createTime(new Date())
-                .updateTime(new Date())
-                .build();
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setLastName("我改名字了");
+        employee.setCreateTime(new Date());
+        employee.setUpdateTime(new Date());
         int result = employeeService.updateByPrimaryKeySelective(employee);
         log.info("updateByPrimaryKeySelective {} employee id {}", result, employee.getId());
     }

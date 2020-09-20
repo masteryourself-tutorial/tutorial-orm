@@ -14,6 +14,7 @@
     <modules>
         <module>tutorial-tk-mybatis-quickstart</module>
         <module>tutorial-tk-mybatis-mbg</module>
+        <module>tutorial-tk-mybatis-enum</module>
     </modules>
 
 

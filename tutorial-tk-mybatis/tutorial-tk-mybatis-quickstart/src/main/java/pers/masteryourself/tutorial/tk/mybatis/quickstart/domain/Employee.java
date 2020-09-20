@@ -1,6 +1,5 @@
 package pers.masteryourself.tutorial.tk.mybatis.quickstart.domain;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
@@ -18,7 +17,6 @@ import java.util.Date;
  */
 @Data
 @ToString
-@Builder
 public class Employee {
 
     @Id
