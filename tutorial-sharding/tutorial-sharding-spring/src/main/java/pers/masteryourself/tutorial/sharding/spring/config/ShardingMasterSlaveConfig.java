@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * <p>description : ShardingMasterSlaveConfig
- * 不分库分表, 读写分离
+ * 仅读写分离, 一主二从
  *
  * <p>blog : https://blog.csdn.net/masteryourself
  *

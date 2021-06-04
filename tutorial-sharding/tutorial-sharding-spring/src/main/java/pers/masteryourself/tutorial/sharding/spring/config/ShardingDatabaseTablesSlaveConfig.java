@@ -24,19 +24,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>description : ShardingTablesConfig
- * 不分库, 只分表, 2 张表
+ * <p>description : ShardingDatabaseTablesSlaveConfig
+ * 分库分表, 共两库, 每库四张表
  *
  * <p>blog : https://blog.csdn.net/masteryourself
  *
  * @author : masteryourself
  * @version : 1.0.0
- * @date : 2021/6/4 15:27
+ * @date : 2021/6/4 19:21
  */
 @Configuration
-@PropertySource("classpath:application-sharding-tables.properties")
-@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.tables"}, sqlSessionTemplateRef = "tablesDataSourceSqlSessionTemplate")
-public class ShardingTablesConfig {
+@PropertySource("classpath:application-sharding-databases-tables.properties")
+@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.databases_tables"}, sqlSessionTemplateRef = "databaseTablesDataSourceSqlSessionTemplate")
+public class ShardingDatabaseTablesSlaveConfig {
 
     /**
      * 创建一个可以分表的 sharding 数据源
@@ -44,46 +44,54 @@ public class ShardingTablesConfig {
      * @return {@link DataSource} 其本质是 ShardingDataSource
      * @throws SQLException 异常
      */
-    @Bean(name = "tablesDataSource")
-    public DataSource tablesDataSource() throws SQLException {
+    @Bean(name = "databaseTablesDataSource")
+    public DataSource databaseTablesDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        // order 分表规则
-        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("t_order", "ds.t_order_${0..1}");
-        orderTableRuleConfig.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new ShardingTablePreciseShardingAlgorithm()));
+        // 分库规则
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("class_id", new ShardingTablePreciseShardingAlgorithm()));
+        // 分表规则
+        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("student", "ds${0..1}.student_${0..4}");
+        orderTableRuleConfig.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("student_id", new ShardingTablePreciseShardingAlgorithm()));
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRuleConfig);
-        // orderItem 分表规则
-        TableRuleConfiguration orderItemTableRuleConfiguration = new TableRuleConfiguration("t_order_item", "ds.t_order_item_${0..1}");
-        orderItemTableRuleConfiguration.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new ShardingTablePreciseShardingAlgorithm()));
-        shardingRuleConfig.getTableRuleConfigs().add(orderItemTableRuleConfiguration);
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
-        dataSourceMap.put("ds", dataSource());
+        dataSourceMap.put("ds0", master1DataSource());
+        dataSourceMap.put("ds1", master2DataSource());
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, ShardingConfig.init());
     }
 
-    @Bean(name = "tablesDataSourceTransactionManager")
-    public DataSourceTransactionManager tablesDataSourceTransactionManager() throws Exception {
-        return new DataSourceTransactionManager(tablesDataSource());
+    @Bean(name = "databaseTablesDataSourceTransactionManager")
+    public DataSourceTransactionManager databaseTablesDataSourceTransactionManager() throws Exception {
+        return new DataSourceTransactionManager(databaseTablesDataSource());
     }
 
-    @Bean(name = "tablesDataSourceSqlSessionFactory")
-    public SqlSessionFactory tablesDataSourceSqlSessionFactory() throws Exception {
+    @Bean(name = "databaseTablesDataSourceSqlSessionFactory")
+    public SqlSessionFactory databaseTablesDataSourceSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(tablesDataSource());
+        sqlSessionFactoryBean.setDataSource(databaseTablesDataSource());
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "tablesDataSourceSqlSessionTemplate")
-    public SqlSessionTemplate tablesDataSourceSqlSessionTemplate(SqlSessionFactory tablesDataSourceSqlSessionFactory) {
-        return new SqlSessionTemplate(tablesDataSourceSqlSessionFactory);
+    @Bean(name = "databaseTablesDataSourceSqlSessionTemplate")
+    public SqlSessionTemplate databaseTablesDataSourceSqlSessionTemplate(SqlSessionFactory databaseTablesDataSourceSqlSessionFactory) {
+        return new SqlSessionTemplate(databaseTablesDataSourceSqlSessionFactory);
     }
 
     /**
-     * @return 单库
+     * @return master1 库
      */
-    @Bean(name = "dataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource dataSource() {
+    @Bean(name = "master1DataSource")
+    @ConfigurationProperties(prefix = "spring.master1.datasource")
+    public DataSource master1DataSource() {
+        return new HikariDataSource();
+    }
+
+    /**
+     * @return master2 库
+     */
+    @Bean(name = "master2DataSource")
+    @ConfigurationProperties(prefix = "spring.master2.datasource")
+    public DataSource master2DataSource() {
         return new HikariDataSource();
     }
 
@@ -94,7 +102,8 @@ public class ShardingTablesConfig {
 
         @Override
         public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
-            return shardingValue.getValue() % 2 == 0 ? shardingValue.getLogicTableName() + "_0" : shardingValue.getLogicTableName() + "_1";
+            String logicTableName = shardingValue.getLogicTableName();
+            return shardingValue.getValue() % 2 == 0 ? logicTableName + "_0" : logicTableName + "_1";
         }
 
     }
