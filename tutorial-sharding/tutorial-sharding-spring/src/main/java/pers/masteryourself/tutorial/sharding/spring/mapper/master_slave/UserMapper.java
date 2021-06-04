@@ -1,6 +1,6 @@
 package pers.masteryourself.tutorial.sharding.spring.mapper.master_slave;
 
-import pers.masteryourself.tutorial.sharding.spring.domain.User;
+import pers.masteryourself.tutorial.sharding.spring.domain.master_slave.User;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

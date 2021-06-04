@@ -5,9 +5,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
-import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +17,13 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * <p>description : MasterSlaveConfig
+ * <p>description : ShardingMasterSlaveConfig
+ * 不分库分表, 读写分离
  *
  * <p>blog : https://blog.csdn.net/masteryourself
  *
@@ -30,8 +33,8 @@ import java.util.*;
  */
 @Configuration
 @PropertySource("classpath:application-sharding-master-slave.properties")
-@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.master_slave"}, sqlSessionFactoryRef = "masterSlaveDataSourceSqlSessionFactory")
-public class MasterSlaveConfig {
+@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.master_slave"}, sqlSessionTemplateRef = "masterSlaveDataSourceSqlSessionTemplate")
+public class ShardingMasterSlaveConfig {
 
     /**
      * 创建一个可以读写分离的 sharding 数据源
@@ -55,33 +58,19 @@ public class MasterSlaveConfig {
         /*shardingRuleConfig.setMasterSlaveRuleConfigs(Lists.newArrayList(
                 new MasterSlaveRuleConfiguration("ds_ms0", "ds_master", Collections.singletonList("ds_slave_0")),
                 new MasterSlaveRuleConfiguration("ds_ms1", "ds_master", Collections.singletonList("ds_slave_1"))));*/
-        Properties props = new Properties();
-        props.put(ShardingPropertiesConstant.SQL_SHOW.getKey(), true);
-        props.put(ShardingPropertiesConstant.EXECUTOR_SIZE.getKey(), 10);
-        Map<String, DataSource> result = new HashMap<>(10);
-        result.put("ds_master", masterDataSource());
-        result.put("ds_slave_0", slave1DataSource());
-        result.put("ds_slave_1", slave2DataSource());
-        return ShardingDataSourceFactory.createDataSource(result, shardingRuleConfig, props);
+        // 添加所有数据源
+        Map<String, DataSource> dataSourceMap = new HashMap<>(8);
+        dataSourceMap.put("ds_master", masterDataSource());
+        dataSourceMap.put("ds_slave_0", slave1DataSource());
+        dataSourceMap.put("ds_slave_1", slave2DataSource());
+        return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, ShardingConfig.init());
     }
 
-    /**
-     * 为 masterSlaveDataSource 提供事务管理器
-     *
-     * @return {@link DataSourceTransactionManager}
-     * @throws Exception 异常
-     */
     @Bean(name = "masterSlaveDataSourceTransactionManager")
     public DataSourceTransactionManager masterSlaveDataSourceTransactionManager() throws Exception {
         return new DataSourceTransactionManager(masterSlaveDataSource());
     }
 
-    /**
-     * 为 masterSlaveDataSource 提供 SqlSessionFactory
-     *
-     * @return {@link SqlSessionFactory}
-     * @throws Exception 异常
-     */
     @Bean(name = "masterSlaveDataSourceSqlSessionFactory")
     public SqlSessionFactory masterSlaveDataSourceSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -89,8 +78,13 @@ public class MasterSlaveConfig {
         return sqlSessionFactoryBean.getObject();
     }
 
+    @Bean(name = "masterSlaveDataSourceSqlSessionTemplate")
+    public SqlSessionTemplate masterSlaveDataSourceSqlSessionTemplate(SqlSessionFactory masterSlaveDataSourceSqlSessionFactory) {
+        return new SqlSessionTemplate(masterSlaveDataSourceSqlSessionFactory);
+    }
+
     /**
-     * @return 返回主库数据源
+     * @return 主库
      */
     @Bean(name = "masterDataSource")
     @ConfigurationProperties(prefix = "spring.master.datasource")

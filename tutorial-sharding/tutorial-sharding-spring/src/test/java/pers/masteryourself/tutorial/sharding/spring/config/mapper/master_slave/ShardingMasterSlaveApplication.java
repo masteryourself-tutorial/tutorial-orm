@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringRunner;
-import pers.masteryourself.tutorial.sharding.spring.domain.User;
+import pers.masteryourself.tutorial.sharding.spring.domain.master_slave.User;
 import pers.masteryourself.tutorial.sharding.spring.mapper.master_slave.UserMapper;
 
 import javax.annotation.Resource;
@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MasterSlaveApplication {
+public class ShardingMasterSlaveApplication {
 
     @Resource
     private UserMapper userMapper;

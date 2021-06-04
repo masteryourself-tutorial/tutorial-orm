@@ -1,11 +1,8 @@
-package pers.masteryourself.tutorial.sharding.spring.domain;
+package pers.masteryourself.tutorial.sharding.spring.domain.master_slave;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * <p>description : User
@@ -17,6 +14,7 @@ import javax.persistence.Id;
  * @date : 2021/6/4 11:36
  */
 @Data
+@Table
 public class User {
 
     @Id
