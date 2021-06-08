@@ -1,4 +1,4 @@
-package pers.masteryourself.tutorial.sharding.spring.domain.master_slave;
+package pers.masteryourself.tutorial.sharding.spring.domain.masterslave;
 
 import lombok.Data;
 

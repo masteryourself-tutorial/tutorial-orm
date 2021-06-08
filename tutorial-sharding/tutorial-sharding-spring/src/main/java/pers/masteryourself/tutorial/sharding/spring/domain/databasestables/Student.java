@@ -1,4 +1,4 @@
-package pers.masteryourself.tutorial.sharding.spring.domain.databases_tables;
+package pers.masteryourself.tutorial.sharding.spring.domain.databasestables;
 
 import lombok.Data;
 

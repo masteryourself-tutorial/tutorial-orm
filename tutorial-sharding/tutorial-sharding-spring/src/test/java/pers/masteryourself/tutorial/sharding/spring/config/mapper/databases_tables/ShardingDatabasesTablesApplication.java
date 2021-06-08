@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pers.masteryourself.tutorial.sharding.spring.domain.databases_tables.Student;
-import pers.masteryourself.tutorial.sharding.spring.mapper.databases_tables.StudentMapper;
+import pers.masteryourself.tutorial.sharding.spring.domain.databasestables.Student;
+import pers.masteryourself.tutorial.sharding.spring.mapper.databasestables.StudentMapper;
 
 import javax.annotation.Resource;
 import java.util.List;

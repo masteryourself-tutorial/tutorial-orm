@@ -1,6 +1,6 @@
-package pers.masteryourself.tutorial.sharding.spring.mapper.databases_tables;
+package pers.masteryourself.tutorial.sharding.spring.mapper.databasestables;
 
-import pers.masteryourself.tutorial.sharding.spring.domain.databases_tables.Student;
+import pers.masteryourself.tutorial.sharding.spring.domain.databasestables.Student;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
