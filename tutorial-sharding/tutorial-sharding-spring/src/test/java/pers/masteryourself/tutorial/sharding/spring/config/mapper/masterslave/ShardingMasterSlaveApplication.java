@@ -1,4 +1,4 @@
-package pers.masteryourself.tutorial.sharding.spring.config.mapper.master_slave;
+package pers.masteryourself.tutorial.sharding.spring.config.mapper.masterslave;
 
 import org.apache.shardingsphere.api.hint.HintManager;
 import org.junit.Test;

@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @Configuration
 @PropertySource("classpath:application-sharding-master-slave.properties")
-@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.master_slave"}, sqlSessionTemplateRef = "masterSlaveDataSourceSqlSessionTemplate")
+@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.masterslave"}, sqlSessionTemplateRef = "masterSlaveDataSourceSqlSessionTemplate")
 public class ShardingMasterSlaveConfig {
 
     /**

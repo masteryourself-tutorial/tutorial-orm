@@ -1,6 +1,7 @@
 package pers.masteryourself.tutorial.sharding.spring.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
@@ -33,9 +34,10 @@ import java.util.Map;
  * @version : 1.0.0
  * @date : 2021/6/4 19:21
  */
+@Slf4j
 @Configuration
 @PropertySource("classpath:application-sharding-databases-tables.properties")
-@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.databases_tables"}, sqlSessionTemplateRef = "databaseTablesDataSourceSqlSessionTemplate")
+@MapperScan(basePackages = {"pers.masteryourself.tutorial.sharding.spring.mapper.databasestables"}, sqlSessionTemplateRef = "databaseTablesDataSourceSqlSessionTemplate")
 public class ShardingDatabaseTablesSlaveConfig {
 
     /**
@@ -50,13 +52,13 @@ public class ShardingDatabaseTablesSlaveConfig {
         // 分库规则
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("class_id", new ShardingTablePreciseShardingAlgorithm()));
         // 分表规则
-        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("student", "ds${0..1}.student_${0..4}");
+        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("student", "ds_master${0..1}.student_${0..3}");
         orderTableRuleConfig.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("student_id", new ShardingTablePreciseShardingAlgorithm()));
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRuleConfig);
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
-        dataSourceMap.put("ds0", master1DataSource());
-        dataSourceMap.put("ds1", master2DataSource());
+        dataSourceMap.put("ds_master0", master0DataSource());
+        dataSourceMap.put("ds_master1", master1DataSource());
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, ShardingConfig.init());
     }
 
@@ -78,20 +80,20 @@ public class ShardingDatabaseTablesSlaveConfig {
     }
 
     /**
-     * @return master1 库
+     * @return master0 库
      */
-    @Bean(name = "master1DataSource")
-    @ConfigurationProperties(prefix = "spring.master1.datasource")
-    public DataSource master1DataSource() {
+    @Bean(name = "master0DataSource")
+    @ConfigurationProperties(prefix = "spring.master0.datasource")
+    public DataSource master0DataSource() {
         return new HikariDataSource();
     }
 
     /**
-     * @return master2 库
+     * @return master0 库
      */
-    @Bean(name = "master2DataSource")
-    @ConfigurationProperties(prefix = "spring.master2.datasource")
-    public DataSource master2DataSource() {
+    @Bean(name = "master1DataSource")
+    @ConfigurationProperties(prefix = "spring.master1.datasource")
+    public DataSource master1DataSource() {
         return new HikariDataSource();
     }
 
@@ -102,8 +104,30 @@ public class ShardingDatabaseTablesSlaveConfig {
 
         @Override
         public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
-            String logicTableName = shardingValue.getLogicTableName();
-            return shardingValue.getValue() % 2 == 0 ? logicTableName + "_0" : logicTableName + "_1";
+            // 判断分库还是分表
+            String columnName = shardingValue.getColumnName();
+            Long value = shardingValue.getValue();
+            if ("class_id".equals(columnName)) {
+                // 分库字段
+                for (String availableTargetName : availableTargetNames) {
+                    // 截取最后一位数字(0..1) ds_master${0..1}
+                    long suffix = Long.parseLong(availableTargetName.substring(availableTargetName.length() - 1));
+                    if (suffix == value % 2) {
+                        return availableTargetName;
+                    }
+                }
+            } else if ("student_id".equals(columnName)) {
+                // 分表字段
+                for (String availableTargetName : availableTargetNames) {
+                    // 截取最后一位数字(0..3) student_${0..3}
+                    long suffix = Long.parseLong(availableTargetName.substring(availableTargetName.length() - 1));
+                    if (suffix == value % 4) {
+                        return availableTargetName;
+                    }
+                }
+            }
+            log.error("不知道是啥操作");
+            return null;
         }
 
     }
