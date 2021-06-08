@@ -54,13 +54,13 @@ public class ShardingDatabasesTablesSlaveConfig {
         // 分库规则
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("class_id", new ShardingTablePreciseShardingAlgorithm()));
         // 分表规则
-        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("student", "ds_master${0..1}.student_${0..3}");
+        TableRuleConfiguration orderTableRuleConfig = new TableRuleConfiguration("student", "ds_master_${0..1}.student_${0..3}");
         orderTableRuleConfig.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("student_id", new ShardingTablePreciseShardingAlgorithm()));
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRuleConfig);
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
-        dataSourceMap.put("ds_master0", master0DataSource());
-        dataSourceMap.put("ds_master1", master1DataSource());
+        dataSourceMap.put("ds_master_0", master0DataSource());
+        dataSourceMap.put("ds_master_1", master1DataSource());
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, this.init());
     }
 

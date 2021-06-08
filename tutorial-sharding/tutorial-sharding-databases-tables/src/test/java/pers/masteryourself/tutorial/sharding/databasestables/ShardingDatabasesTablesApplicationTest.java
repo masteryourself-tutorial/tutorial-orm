@@ -61,7 +61,7 @@ public class ShardingDatabasesTablesApplicationTest {
         Student student = new Student();
         student.setClassId(1L);
         student.setStudentId(3L);
-        studentMapper.select(student);
+        System.out.println(studentMapper.select(student));
     }
 
     /**
@@ -73,7 +73,7 @@ public class ShardingDatabasesTablesApplicationTest {
         Student student = new Student();
         student.setClassId(100L);
         student.setStudentId(100L);
-        studentMapper.select(student);
+        System.out.println(studentMapper.select(student));
     }
 
     /**

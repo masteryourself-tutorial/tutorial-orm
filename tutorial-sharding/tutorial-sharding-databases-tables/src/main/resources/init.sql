@@ -1,0 +1,89 @@
+-- 创建 0 号库
+
+CREATE DATABASE IF NOT EXISTS `tutorial-sharding-databases-table-master_0`
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_general_ci;
+
+use `tutorial-sharding-databases-table-master_0`;
+
+DROP TABLE IF EXISTS `student_0`;
+CREATE TABLE `student_0` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_1`;
+CREATE TABLE `student_1` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_2`;
+CREATE TABLE `student_2` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_3`;
+CREATE TABLE `student_3` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+
+-- 创建 1 号库
+
+CREATE DATABASE IF NOT EXISTS `tutorial-sharding-databases-table-master_1`
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_general_ci;
+
+use `tutorial-sharding-databases-table-master_1`;
+
+DROP TABLE IF EXISTS `student_0`;
+CREATE TABLE `student_0` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_1`;
+CREATE TABLE `student_1` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_2`;
+CREATE TABLE `student_2` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `student_3`;
+CREATE TABLE `student_3` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
