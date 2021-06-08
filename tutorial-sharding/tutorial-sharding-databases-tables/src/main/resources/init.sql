@@ -13,7 +13,7 @@ CREATE TABLE `student_0` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_1`;
 CREATE TABLE `student_1` (
@@ -22,7 +22,7 @@ CREATE TABLE `student_1` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_2`;
 CREATE TABLE `student_2` (
@@ -31,7 +31,7 @@ CREATE TABLE `student_2` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_3`;
 CREATE TABLE `student_3` (
@@ -40,7 +40,7 @@ CREATE TABLE `student_3` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- ----------------------------------------------------------------- master_1 库 -----------------------------------------------------------------
@@ -58,7 +58,7 @@ CREATE TABLE `student_0` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_1`;
 CREATE TABLE `student_1` (
@@ -67,7 +67,7 @@ CREATE TABLE `student_1` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_2`;
 CREATE TABLE `student_2` (
@@ -76,7 +76,7 @@ CREATE TABLE `student_2` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `student_3`;
 CREATE TABLE `student_3` (
@@ -85,5 +85,5 @@ CREATE TABLE `student_3` (
   `student_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
