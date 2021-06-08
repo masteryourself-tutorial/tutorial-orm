@@ -1,4 +1,4 @@
--- 创建 0 号库
+-- ----------------------------------------------------------------- master_0 库 -----------------------------------------------------------------
 
 CREATE DATABASE IF NOT EXISTS `tutorial-sharding-databases-table-master_0`
 DEFAULT CHARACTER SET utf8mb4
@@ -43,7 +43,7 @@ CREATE TABLE `student_3` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 
--- 创建 1 号库
+-- ----------------------------------------------------------------- master_1 库 -----------------------------------------------------------------
 
 CREATE DATABASE IF NOT EXISTS `tutorial-sharding-databases-table-master_1`
 DEFAULT CHARACTER SET utf8mb4

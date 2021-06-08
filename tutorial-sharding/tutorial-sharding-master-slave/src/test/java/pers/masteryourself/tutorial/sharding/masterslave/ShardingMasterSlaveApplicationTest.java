@@ -11,7 +11,6 @@ import pers.masteryourself.tutorial.sharding.masterslave.mapper.UserMapper;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <p>description : ShardingMasterSlaveApplicationTest
@@ -30,10 +29,9 @@ public class ShardingMasterSlaveApplicationTest {
     private UserMapper userMapper;
 
     @Test
-    @Repeat(value = 2)
     public void testWrite() {
         User user = new User();
-        user.setName(UUID.randomUUID().toString().replaceAll("-", ""));
+        user.setName("新用户");
         userMapper.insertSelective(user);
     }
 

@@ -52,19 +52,19 @@ public class ShardingMasterSlaveConfig {
          * 如果在表数据量非常大的情况下, 启动会非常慢
          */
         shardingRuleConfig.setMasterSlaveRuleConfigs(Lists.newArrayList(
-                new MasterSlaveRuleConfiguration("ds_ms0", "ds_master", Arrays.asList("ds_slave_0", "ds_slave_1"))));
+                new MasterSlaveRuleConfiguration("ds_master_slave", "ds_master", Arrays.asList("ds_slave_0", "ds_slave_1"))));
         /**
          * 这里可以优化下, 使用下面这种方式注入会过滤 {@link org.apache.shardingsphere.core.execute.metadata.TableMetaDataInitializer#load(org.apache.shardingsphere.core.rule.ShardingRule)} 方法
          * 从而加速启动速度, 但不知道会不会引入其他问题
          */
         /*shardingRuleConfig.setMasterSlaveRuleConfigs(Lists.newArrayList(
-                new MasterSlaveRuleConfiguration("ds_ms0", "ds_master", Collections.singletonList("ds_slave_0")),
-                new MasterSlaveRuleConfiguration("ds_ms1", "ds_master", Collections.singletonList("ds_slave_1"))));*/
+                new MasterSlaveRuleConfiguration("ds_master_slave_0", "ds_master", Collections.singletonList("ds_slave_0")),
+                new MasterSlaveRuleConfiguration("ds_master_slave_1", "ds_master", Collections.singletonList("ds_slave_1"))));*/
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put("ds_master", masterDataSource());
-        dataSourceMap.put("ds_slave_0", slave1DataSource());
-        dataSourceMap.put("ds_slave_1", slave2DataSource());
+        dataSourceMap.put("ds_slave_0", slave0DataSource());
+        dataSourceMap.put("ds_slave_1", slave1DataSource());
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, this.init());
     }
 
@@ -95,20 +95,20 @@ public class ShardingMasterSlaveConfig {
     }
 
     /**
+     * @return 从库0
+     */
+    @Bean(name = "slave0DataSource")
+    @ConfigurationProperties(prefix = "spring.slave0.datasource")
+    public DataSource slave0DataSource() {
+        return new HikariDataSource();
+    }
+
+    /**
      * @return 从库1
      */
     @Bean(name = "slave1DataSource")
     @ConfigurationProperties(prefix = "spring.slave1.datasource")
     public DataSource slave1DataSource() {
-        return new HikariDataSource();
-    }
-
-    /**
-     * @return 从库2
-     */
-    @Bean(name = "slave2DataSource")
-    @ConfigurationProperties(prefix = "spring.slave2.datasource")
-    public DataSource slave2DataSource() {
         return new HikariDataSource();
     }
 
