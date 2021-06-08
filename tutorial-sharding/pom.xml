@@ -11,8 +11,12 @@
 
     <artifactId>tutorial-sharding</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>tutorial-sharding-spring-boot</module>
+        <module>tutorial-sharding-databases-tables</module>
+        <module>tutorial-sharding-master-slave</module>
+        <module>tutorial-sharding-multi-datasource</module>
+        <module>tutorial-sharding-tables</module>
     </modules>
 
 
