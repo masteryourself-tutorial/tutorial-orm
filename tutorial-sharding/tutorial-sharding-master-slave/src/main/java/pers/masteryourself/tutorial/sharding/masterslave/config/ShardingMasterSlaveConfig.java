@@ -52,7 +52,7 @@ public class ShardingMasterSlaveConfig {
          * 如果在表数据量非常大的情况下, 启动会非常慢
          */
         shardingRuleConfig.setMasterSlaveRuleConfigs(Lists.newArrayList(
-                new MasterSlaveRuleConfiguration("ds_master_slave", "ds_master", Arrays.asList("ds_slave_0", "ds_slave_1"))));
+                new MasterSlaveRuleConfiguration("ds_master_slave", "ds_master", Arrays.asList("ds_master_slave_0", "ds_master_slave_1"))));
         /**
          * 这里可以优化下, 使用下面这种方式注入会过滤 {@link org.apache.shardingsphere.core.execute.metadata.TableMetaDataInitializer#load(org.apache.shardingsphere.core.rule.ShardingRule)} 方法
          * 从而加速启动速度, 但不知道会不会引入其他问题
@@ -63,8 +63,8 @@ public class ShardingMasterSlaveConfig {
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put("ds_master", masterDataSource());
-        dataSourceMap.put("ds_slave_0", slave0DataSource());
-        dataSourceMap.put("ds_slave_1", slave1DataSource());
+        dataSourceMap.put("ds_master_slave_0", masterSlave0DataSource());
+        dataSourceMap.put("ds_master_slave_1", masterSlave1DataSource());
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, this.init());
     }
 
@@ -97,18 +97,18 @@ public class ShardingMasterSlaveConfig {
     /**
      * @return 从库0
      */
-    @Bean(name = "slave0DataSource")
-    @ConfigurationProperties(prefix = "spring.slave0.datasource")
-    public DataSource slave0DataSource() {
+    @Bean(name = "masterSlave0DataSource")
+    @ConfigurationProperties(prefix = "spring.master-slave0.datasource")
+    public DataSource masterSlave0DataSource() {
         return new HikariDataSource();
     }
 
     /**
      * @return 从库1
      */
-    @Bean(name = "slave1DataSource")
-    @ConfigurationProperties(prefix = "spring.slave1.datasource")
-    public DataSource slave1DataSource() {
+    @Bean(name = "masterSlave1DataSource")
+    @ConfigurationProperties(prefix = "spring.master-slave1.datasource")
+    public DataSource masterSlave1DataSource() {
         return new HikariDataSource();
     }
 

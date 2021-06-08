@@ -15,7 +15,7 @@
     <modules>
         <module>tutorial-sharding-databases-tables</module>
         <module>tutorial-sharding-master-slave</module>
-        <module>tutorial-sharding-multi-datasource</module>
+        <module>tutorial-sharding-mixed</module>
         <module>tutorial-sharding-tables</module>
     </modules>
 
