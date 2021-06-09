@@ -31,6 +31,9 @@ public class ShardingTablesApplicationTest {
     @Resource
     private OrderItemMapper orderItemMapper;
 
+    /**
+     * 分别插入 t_order_item_0、t_order_item_0、t_order_0 表
+     */
     @Test
     public void testWriteEven() {
         Order order = new Order();
@@ -47,6 +50,9 @@ public class ShardingTablesApplicationTest {
         orderMapper.insertSelective(order);
     }
 
+    /**
+     * 分别插入 t_order_item_1、t_order_item_1、t_order_1 表
+     */
     @Test
     public void testWriteOdd() {
         Order order = new Order();
@@ -64,8 +70,9 @@ public class ShardingTablesApplicationTest {
     }
 
     /**
-     * 查询所有数据
-     * 会自动帮我们查询所有表
+     * 查询所有从表
+     * t_order_0、t_order_1
+     * t_order_item_0、t_order_item_1
      */
     @Test
     public void testRead() {
