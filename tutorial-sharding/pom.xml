@@ -17,6 +17,7 @@
         <module>tutorial-sharding-master-slave</module>
         <module>tutorial-sharding-mixed</module>
         <module>tutorial-sharding-tables</module>
+        <module>tutorial-sharding-multi</module>
     </modules>
 
 
