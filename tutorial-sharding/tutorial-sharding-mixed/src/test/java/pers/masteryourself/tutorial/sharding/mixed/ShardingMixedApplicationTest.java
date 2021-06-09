@@ -28,6 +28,7 @@ public class ShardingMixedApplicationTest {
     private StudentMapper studentMapper;
 
     /**
+     * 插入 master_1 主库的 student_3 表
      * database: 1 % 2 == 1
      * table: 3 % 4 == 3
      * ds_master_1.student_3
@@ -42,6 +43,7 @@ public class ShardingMixedApplicationTest {
     }
 
     /**
+     * 插入 master_0 主库的 student_0 表
      * database: 100L % 2 == 0
      * table: 100 % 4 == 0
      * ds_master_0.student_0
@@ -56,9 +58,10 @@ public class ShardingMixedApplicationTest {
     }
 
     /**
+     * 查询 master_1 从库的 student_3 表
      * database: 1 % 2 == 1
      * table: 3 % 4 == 3
-     * ds_master_1_slave_0 / ds_master_1_slave_1 / ds_master_1_slave_0 / ds_master_1_slave_1 交替打印
+     * ds_master_1_slave_0.student_3 / ds_master_1_slave_1.student_3 / ds_master_1_slave_0.student_3 / ds_master_1_slave_1.student_3 交替打印
      */
     @Test
     @Repeat(value = 4)
@@ -70,9 +73,10 @@ public class ShardingMixedApplicationTest {
     }
 
     /**
+     * 查询 master_0 从库的 student_0 表
      * database: 100L % 2 == 0
      * table: 100 % 4 == 0
-     * ds_master_0_slave_0 / ds_master_0_slave_1 / ds_master_0_slave_0 / ds_master_0_slave_1 交替打印
+     * ds_master_0_slave_0.student_0 / ds_master_0_slave_1.student_0 / ds_master_0_slave_0.student_0 / ds_master_0_slave_1.student_0 交替打印
      */
     @Test
     @Repeat(value = 4)
@@ -84,8 +88,34 @@ public class ShardingMixedApplicationTest {
     }
 
     /**
-     * 查询所有数据
-     * 会自动帮我们查询所有从库的 student 表
+     * 查询 master_0 从库的所有表
+     * database: 100L % 2 == 0
+     * ds_master_0_slave_0.student_0 + ds_master_0_slave_1.student_1 + ds_master_0_slave_0.student_2 + ds_master_0_slave_1.student_3
+     */
+    @Test
+    public void testSelectDataBase_0() {
+        Student student = new Student();
+        student.setClassId(100L);
+        System.out.println(studentMapper.select(student));
+    }
+
+    /**
+     * 查询所有从库的 student_0 表
+     * table: 100 % 4 == 0
+     * ds_master_0_slave_0.student_0 + ds_master_1_slave_0.student_0 / ds_master_0_slave_1.student_0 + ds_master_1_slave_1.student_0 交替打印
+     */
+    @Test
+    @Repeat(value = 2)
+    public void testSelectTable_0() {
+        Student student = new Student();
+        student.setStudentId(100L);
+        System.out.println(studentMapper.select(student));
+    }
+
+    /**
+     * 查询所有从库的 student 表
+     * ds_master_0_slave_0.student_0 + ds_master_0_slave_1.student_1 + ds_master_0_slave_0.student_2 + ds_master_0_slave_1.student_3 +
+     * ds_master_1_slave_0.student_0 + ds_master_1_slave_1.student_1 + ds_master_1_slave_0.student_2 + ds_master_1_slave_1.student_3
      */
     @Test
     public void testRead() {
