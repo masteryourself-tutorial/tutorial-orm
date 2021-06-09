@@ -61,6 +61,8 @@ public class ShardingDatabasesTablesSlaveConfig {
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put("ds_master_0", master0DataSource());
         dataSourceMap.put("ds_master_1", master1DataSource());
+        // dict 表未配置分库分表路由规则, 且只存在 master_0 库, 所以需要配置默认数据源名称
+        shardingRuleConfig.setDefaultDataSourceName("ds_master_0");
         return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, this.init());
     }
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
- * <p>description : Student
+ * <p>description : Student, 学生信息表, 参与分库分表
  *
  * <p>blog : https://blog.csdn.net/masteryourself
  *

@@ -5,7 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringRunner;
+import pers.masteryourself.tutorial.sharding.databasestables.domain.Dict;
 import pers.masteryourself.tutorial.sharding.databasestables.domain.Student;
+import pers.masteryourself.tutorial.sharding.databasestables.mapper.DictMapper;
 import pers.masteryourself.tutorial.sharding.databasestables.mapper.StudentMapper;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class ShardingDatabasesTablesApplicationTest {
 
     @Resource
     private StudentMapper studentMapper;
+
+    @Resource
+    private DictMapper dictMapper;
 
     /**
      * 插入 master_1 库的 student_3 表
@@ -119,6 +124,18 @@ public class ShardingDatabasesTablesApplicationTest {
     public void testRead() {
         List<Student> students = studentMapper.selectAll();
         System.out.println(students);
+    }
+
+    /**
+     * dict 表从默认数据源查找
+     * ds_master_0.dict
+     */
+    @Test
+    @Repeat(value = 4)
+    public void testDict() {
+        Dict dict = new Dict();
+        dict.setId(1L);
+        dictMapper.select(dict);
     }
 
 }

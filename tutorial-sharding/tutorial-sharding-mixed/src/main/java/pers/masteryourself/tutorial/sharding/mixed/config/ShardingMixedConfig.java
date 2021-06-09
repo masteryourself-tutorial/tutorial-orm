@@ -62,6 +62,8 @@ public class ShardingMixedConfig {
                 new MasterSlaveRuleConfiguration("ds_master_slave_0", "ds_master_0", Arrays.asList("ds_master_0_slave_0", "ds_master_0_slave_1")),
                 new MasterSlaveRuleConfiguration("ds_master_slave_1", "ds_master_1", Arrays.asList("ds_master_1_slave_0", "ds_master_1_slave_1"))
         ));
+        // dict 表未配置分库分表路由规则, 且只存在 master_0 库, 所以需要配置默认数据源名称
+        shardingRuleConfig.setDefaultDataSourceName("ds_master_1");
         // 添加所有数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put("ds_master_0", master0DataSource());
