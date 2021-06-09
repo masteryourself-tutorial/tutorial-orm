@@ -3,6 +3,7 @@ package pers.masteryourself.tutorial.sharding.databasestables;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringRunner;
 import pers.masteryourself.tutorial.sharding.databasestables.domain.Student;
 import pers.masteryourself.tutorial.sharding.databasestables.mapper.StudentMapper;
@@ -27,8 +28,10 @@ public class ShardingDatabasesTablesApplicationTest {
     private StudentMapper studentMapper;
 
     /**
+     * 插入 master_1 库的 student_3 表
      * database: 1 % 2 == 1
      * table: 3 % 4 == 3
+     * ds_master_1.student_3
      */
     @Test
     public void testWriteDataBase_1Table_3() {
@@ -40,8 +43,10 @@ public class ShardingDatabasesTablesApplicationTest {
     }
 
     /**
+     * 插入 master_0 库的 student_0 表
      * database: 100L % 2 == 0
      * table: 100 % 4 == 0
+     * ds_master_0.student_0
      */
     @Test
     public void testWriteDataBase_0Table_0() {
@@ -53,8 +58,10 @@ public class ShardingDatabasesTablesApplicationTest {
     }
 
     /**
+     * 查询 master_1 库的 student_3 表
      * database: 1 % 2 == 1
      * table: 3 % 4 == 3
+     * ds_master_1.student_3
      */
     @Test
     public void testSelectDataBase_1Table_3() {
@@ -65,8 +72,10 @@ public class ShardingDatabasesTablesApplicationTest {
     }
 
     /**
+     * 查询 master_0 库的 student_0 表
      * database: 100L % 2 == 0
      * table: 100 % 4 == 0
+     * ds_master_0.student_0
      */
     @Test
     public void testSelectDataBase_0Table_0() {
@@ -77,8 +86,34 @@ public class ShardingDatabasesTablesApplicationTest {
     }
 
     /**
-     * 查询所有数据
-     * 会自动帮我们查询所有表
+     * 查询 master_0 库的所有表
+     * database: 100L % 2 == 0
+     * ds_master_0.student_0 + ds_master_0.student_1 + ds_master_0.student_2 + ds_master_0.student_3
+     */
+    @Test
+    public void testSelectDataBase_0() {
+        Student student = new Student();
+        student.setClassId(100L);
+        System.out.println(studentMapper.select(student));
+    }
+
+    /**
+     * 查询所有库的 student_0 表
+     * table: 100 % 4 == 0
+     * ds_master_0.student_0 + ds_master_1.student_0
+     */
+    @Test
+    @Repeat(value = 2)
+    public void testSelectTable_0() {
+        Student student = new Student();
+        student.setStudentId(100L);
+        System.out.println(studentMapper.select(student));
+    }
+
+    /**
+     * 查询所有从库的 student 表
+     * ds_master_0.student_0 + ds_master_0.student_1 + ds_master_0.student_2 + ds_master_0.student_3 +
+     * ds_master_1.student_0 + ds_master_1.student_1 + ds_master_1.student_2 + ds_master_1.student_3
      */
     @Test
     public void testRead() {

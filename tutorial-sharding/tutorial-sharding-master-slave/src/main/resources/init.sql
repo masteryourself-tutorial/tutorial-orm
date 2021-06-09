@@ -12,8 +12,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `user` VALUES ('1', '主库-张三');
-
 
 -- ----------------------------------------------------------------- slave_0 库 -------------------------------------------------------------------
 
@@ -30,8 +28,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `user` VALUES ('1', '从库0-张三');
-
 
 -- ----------------------------------------------------------------- slave_1 库 -------------------------------------------------------------------
 
@@ -47,5 +43,3 @@ CREATE TABLE `user` (
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO `user` VALUES ('1', '从库1-张三');

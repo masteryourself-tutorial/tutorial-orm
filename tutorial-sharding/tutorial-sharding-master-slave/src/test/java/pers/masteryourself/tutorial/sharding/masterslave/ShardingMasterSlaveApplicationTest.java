@@ -28,6 +28,10 @@ public class ShardingMasterSlaveApplicationTest {
     @Resource
     private UserMapper userMapper;
 
+    /**
+     * 插入到主库 user 表
+     * ds_master.user
+     */
     @Test
     public void testWrite() {
         User user = new User();
@@ -36,7 +40,8 @@ public class ShardingMasterSlaveApplicationTest {
     }
 
     /**
-     * 这里为了看出分表效果, 循环四次, 打印的数据一会是李四/王五
+     * 交替查询从库的 user 表
+     * ds_master_slave_0.user / ds_master_slave_1.user / ds_master_slave_0.user / ds_master_slave_1.user 交替查询
      */
     @Test
     @Repeat(value = 4)
@@ -45,6 +50,10 @@ public class ShardingMasterSlaveApplicationTest {
         System.out.println(users);
     }
 
+    /**
+     * 强制查询主库的 user 表
+     * ds_master.user
+     */
     @Test
     public void testHint() {
         try (HintManager hintManager = HintManager.getInstance()) {
